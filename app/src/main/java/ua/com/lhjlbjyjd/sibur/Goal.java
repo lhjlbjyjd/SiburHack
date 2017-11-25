@@ -5,7 +5,7 @@ package ua.com.lhjlbjyjd.sibur;
  */
 
 public class Goal {
-    private boolean state, photoRequired, emailRequired;
+    private boolean state = false, photoRequired = false, emailRequired = false;
     private String description;
 
     Goal(String description, boolean state, boolean photoRequired, boolean emailRequired) {
