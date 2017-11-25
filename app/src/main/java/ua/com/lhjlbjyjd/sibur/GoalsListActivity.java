@@ -28,7 +28,7 @@ public class GoalsListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example
-        GoalListAdapter mAdapter = new GoalListAdapter(goals);
+        GoalListAdapter mAdapter = new GoalListAdapter(goals, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

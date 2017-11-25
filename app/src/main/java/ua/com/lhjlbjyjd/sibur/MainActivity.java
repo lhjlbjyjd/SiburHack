@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
             goalsData[i] = new Goal("Goal "+i, false, i%2 == 0, i%3 == 0);
         for(int i = 0; i < 10; i++)
             testData[i] = new Task("Задание "+i+1, false, "0", goalsData);
-        TaskListAdapter mAdapter = new TaskListAdapter(testData, getApplicationContext());
+        TaskListAdapter mAdapter = new TaskListAdapter(testData, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 }
