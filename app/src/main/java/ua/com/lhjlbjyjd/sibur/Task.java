@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Task implements Serializable{
     private String name;
-    private  boolean isExecuting = false;
+    private boolean isExecuting = false;
     private String executorID;
     private Goal[] goals;
 

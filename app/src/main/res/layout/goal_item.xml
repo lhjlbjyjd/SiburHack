@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="110dp"
-    android:background="@color/colorAccent"
+    android:background="#ffc8c8"
     android:id="@+id/goal_layout"
     android:layout_marginBottom="5dp">
 
@@ -18,4 +18,14 @@
         android:text="Название"
         android:id="@+id/goal_description_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/goal_description_text"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp" />
 </RelativeLayout>

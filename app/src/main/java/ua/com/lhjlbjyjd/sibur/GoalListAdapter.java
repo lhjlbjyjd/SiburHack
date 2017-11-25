@@ -3,6 +3,8 @@ package ua.com.lhjlbjyjd.sibur;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,7 +38,7 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
                                                          int viewType) {
         // create a new view
         RelativeLayout v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.task_item, parent, false).findViewById(R.id.goal_layout);
+                .inflate(R.layout.goal_item, parent, false).findViewById(R.id.goal_layout);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -47,8 +49,14 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        //((TextView)holder.layout.findViewById(R.id.goal_description_text)).setText(mDataset[position].getDescription());
-
+        ((TextView)holder.layout.findViewById(R.id.goal_description_text)).setText(mDataset[position].getDescription() + " Photo: " +
+                mDataset[position].getPhotoRequired() + " Email: " + mDataset[position].getEmailRequired());
+        ((CheckBox)holder.layout.findViewById(R.id.checkBox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                compoundButton.setChecked(true);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
