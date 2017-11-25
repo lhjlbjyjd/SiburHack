@@ -1,7 +1,11 @@
 package ua.com.lhjlbjyjd.sibur;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -14,6 +18,7 @@ import android.widget.TextView;
 
 public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHolder> {
     private Goal[] mDataset;
+    private Context context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -28,8 +33,9 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public GoalListAdapter(Goal[] myDataset) {
+    public GoalListAdapter(Goal[] myDataset, Context context) {
         mDataset = myDataset;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -51,10 +57,24 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
         // - replace the contents of the view with that element
         ((TextView)holder.layout.findViewById(R.id.goal_description_text)).setText(mDataset[position].getDescription() + " Photo: " +
                 mDataset[position].getPhotoRequired() + " Email: " + mDataset[position].getEmailRequired());
-        ((CheckBox)holder.layout.findViewById(R.id.checkBox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.layout.findViewById(R.id.checkBox).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                compoundButton.setChecked(true);
+            public void onClick(final View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
+                builder.setTitle("Подтверждение");
+                builder.setMessage("Вы подтверждаете выполнение задачи?");
+                builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        view.setEnabled(false);
+                    }});
+                builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ((CheckBox)view).setChecked(false);
+                    }
+                });
+                builder.show();
             }
         });
     }
