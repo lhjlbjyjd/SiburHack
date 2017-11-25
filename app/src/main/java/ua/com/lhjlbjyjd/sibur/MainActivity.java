@@ -23,10 +23,13 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        String[] testData = new String[10];
+        Task[] testData = new Task[10];
+        Goal[] goalsData = new Goal[6];
+        for(int i = 0; i < 6; i++)
+            goalsData[i] = new Goal("Goal "+i, false, i%2 == 0, i%3 == 0);
         for(int i = 0; i < 10; i++)
-            testData[i] = "testname" + i;
-        TaskListAdapter mAdapter = new TaskListAdapter(testData);
+            testData[i] = new Task("Задание "+i+1, false, "0", goalsData);
+        TaskListAdapter mAdapter = new TaskListAdapter(testData, getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
     }
 }
