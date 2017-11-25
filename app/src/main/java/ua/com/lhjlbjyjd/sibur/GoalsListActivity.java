@@ -1,9 +1,13 @@
 package ua.com.lhjlbjyjd.sibur;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import static ua.com.lhjlbjyjd.sibur.GoalListAdapter.REQUEST_IMAGE_CAPTURE;
 
 public class GoalsListActivity extends AppCompatActivity {
 
@@ -13,7 +17,7 @@ public class GoalsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goals_list);
-        Task task = (Task)getIntent().getSerializableExtra("Task");
+        Task task = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
         setTitle(task.getName());
         goals = task.getGoals();
 

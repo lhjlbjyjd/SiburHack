@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ChartActivity.class);
-                intent.putExtra("Dates", dates);
+                //intent.putExtra("Dates", dates);
                 startActivity(intent);
             }
         });
@@ -39,13 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        Task[] testData = new Task[10];
-        Goal[] goalsData = new Goal[6];
-        for(int i = 0; i < 6; i++)
-            goalsData[i] = new Goal("Goal "+i, false, i%2 == 0, i%3 == 0);
-        for(int i = 0; i < 10; i++)
-            testData[i] = new Task("Задание "+i+1, false, "0", goalsData);
-        TaskListAdapter mAdapter = new TaskListAdapter(testData, this);
+        TaskListAdapter mAdapter = new TaskListAdapter(((MyApp) getApplicationContext()).getTasks(), this);
         mRecyclerView.setAdapter(mAdapter);
     }
 }
