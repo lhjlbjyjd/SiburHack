@@ -14,7 +14,7 @@ public class Goal {
         this.photoRequired = photoRequired;
         this.emailRequired = emailRequired;
     }
-
+ ///
     String getDescription() {
         return  description;
     }
