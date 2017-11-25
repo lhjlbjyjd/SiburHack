@@ -5,7 +5,7 @@
     android:layout_height="110dp"
     android:background="@drawable/rectangle"
     android:id="@+id/goal_layout"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="3dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,4 +28,12 @@
         android:layout_alignTop="@+id/goal_description_text"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp" />
+
+    <ImageView
+        android:id="@+id/additional_task"
+        android:layout_width="108dp"
+        android:layout_height="108dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
 </RelativeLayout>
