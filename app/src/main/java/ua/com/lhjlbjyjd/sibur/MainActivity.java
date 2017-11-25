@@ -1,9 +1,14 @@
 package ua.com.lhjlbjyjd.sibur;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,6 +16,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Date[] dates = null;
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChartActivity.class);
+                intent.putExtra("Dates", dates);
+                startActivity(intent);
+            }
+        });
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.tasks_recycler_view);
 
