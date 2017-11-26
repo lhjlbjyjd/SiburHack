@@ -32,6 +32,10 @@ public class Goal implements Serializable{
         return bitmapUrl;
     }
 
+    public void setBitmapUrl(String bitmapUrl) {
+        this.bitmapUrl = bitmapUrl;
+    }
+
     String getDescription() {
         return  description;
     }

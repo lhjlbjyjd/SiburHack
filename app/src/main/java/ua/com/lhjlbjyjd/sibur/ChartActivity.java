@@ -41,7 +41,9 @@ public class ChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chart);
 
         // случай 1: получено задание, по целям которого нужно построить график
-        currentTask = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
+        if(((MyApp)getApplicationContext()).getCurrentTask() == null)
+            currentTask = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
+        else currentTask = ((MyApp)getApplicationContext()).getCurrentTask();
         graphGoal();
         // случай 2: получен массив заданий и границы периода
 

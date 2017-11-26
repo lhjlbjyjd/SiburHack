@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
@@ -15,15 +16,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static ua.com.lhjlbjyjd.sibur.GoalListAdapter.REQUEST_IMAGE_CAPTURE;
 
@@ -92,10 +101,28 @@ public class GoalsListActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Cloudinary cloudinary = new Cloudinary("cloudinary://176679345621523:6inQ3YXx9-MmkoT5H-QJ-W2Ilyg@lhjlbjyjd");
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             goals[lastPhotoIndex].setImage(imageBitmap);
+            Map uploadResult = null;
+            try {
+                File file = new File(Environment.getExternalStorageDirectory(), String.valueOf(System.currentTimeMillis()) + ".png");
+                FileOutputStream fOut = new FileOutputStream(file);
+
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                fOut.flush();
+                fOut.close();
+
+                imageBitmap.recycle();
+                System.gc();
+
+                uploadResult = cloudinary.uploader().upload(file.getAbsolutePath(), ObjectUtils.emptyMap());
+            }catch (IOException e){
+                e.printStackTrace();
+            }
             goals[lastPhotoIndex].setPhotoRequired(false);
+            goals[lastPhotoIndex].setBitmapUrl((String)uploadResult.get("url"));
             mAdapter.notifyDataSetChanged();
             lastPhotoIndex = -1;
         }
@@ -112,7 +139,7 @@ public class GoalsListActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Integer... params) {
             try {
-                URL url = new URL("http://siburapi.zzz.com.ua/php/ownTask.php?id=" + params[0] + "&worker=" + android_id);
+                URL url = new URL("http://rodionovapi.000webhostapp.com/ownTask.php?id=" + params[0] + "&worker=" + android_id);
 
                 Log.d("URL", String.valueOf(url));
 

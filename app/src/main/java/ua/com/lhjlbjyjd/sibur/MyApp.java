@@ -63,12 +63,6 @@ public class MyApp extends Application {
 
     public void setTasks(Task [] tasks){
         this.tasks = tasks;
-        for(int i = 0; i < this.tasks.length; i++)
-            if(this.tasks[i].getExecutorID().equals(Settings.Secure.getString(getContentResolver(),
-                Settings.Secure.ANDROID_ID))) {
-                this.tasks[i] = currentTask;
-                break;
-            }
     }
 
     public void addTask(Task task){

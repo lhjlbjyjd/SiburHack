@@ -3,6 +3,7 @@ package ua.com.lhjlbjyjd.sibur;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,19 +35,17 @@ public class MainActivity extends AppCompatActivity {
 
         app = (MyApp) getApplicationContext();
 
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChartActivity.class);
-                intent.putExtra("Task", 0);
-                startActivity(intent);
-            }
-        });
-
         View currentTask = findViewById(R.id.current_task);
-        if(app.getCurrentTask() == null){
-            currentTask.setVisibility(View.GONE);
-        }else{
+        if(app.getCurrentTask() == null) {
+            for (int i = 0; i < app.getTasks().length; i++)
+                if (app.getTask(i).getExecutorID().equals(Settings.Secure.getString(getContentResolver(),
+                        Settings.Secure.ANDROID_ID))) {
+                    app.setCurrentTask(app.getTask(i));
+                    break;
+                }else if(i == app.getTasks().length-1)
+                    currentTask.setVisibility(View.GONE);
+        }
+        if(app.getCurrentTask() != null){
             Log.d("CurrentTask", app.getCurrentTask().getName());
             ((TextView)currentTask.findViewById(R.id.task_name_text)).setText(app.getCurrentTask().getName());
             ((TextView)currentTask.findViewById(R.id.task_status)).setText("Выполняется");
@@ -61,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChartActivity.class);
+                intent.putExtra("Task", 0);
+                startActivity(intent);
+            }
+        });
+
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.tasks_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -73,14 +81,14 @@ public class MainActivity extends AppCompatActivity {
 
         // specify an adapter (see also next example)
         mAdapter = new TaskListAdapter(app.getTasks(),app.getCurrentTask() != null, this);
+
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    /*@Override
+    @Override
     public void onResume(){
         super.onResume();
-        mAdapter.notifyDataSetChanged();
-    }*/
+    }
 
     class InfoUpdate extends AsyncTask<Void, Void, Void> {
 
@@ -92,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                URL url = new URL("http://siburapi.zzz.com.ua/php/getTasks.php");
+                URL url = new URL("http://rodionovapi.000webhostapp.com/getTasks.php");
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");

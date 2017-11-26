@@ -43,7 +43,7 @@ public class LoaderActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                URL url = new URL("http://siburapi.zzz.com.ua/php/getTasks.php");
+                URL url = new URL("http://rodionovapi.000webhostapp.com/getTasks.php");
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -67,7 +67,7 @@ public class LoaderActivity extends AppCompatActivity {
                     JSONObject object = array.getJSONObject(i);
                     int id = object.getInt("id");
                     String name = object.getString("Name");
-                    boolean state = !object.getString("StartDate").equals("0");
+                    boolean state = !object.getString("BeginDate").equals("0");
                     String executorId = object.getString("workerId");
                     List<Goal> goals = new ArrayList<>();
                     JSONArray goalsArray = new JSONArray(object.getString("Goals"));
