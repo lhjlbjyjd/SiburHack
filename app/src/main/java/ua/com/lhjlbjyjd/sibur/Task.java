@@ -1,6 +1,7 @@
 package ua.com.lhjlbjyjd.sibur;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by lhjlbjyjd on 25.11.2017.
@@ -11,7 +12,7 @@ public class Task implements Serializable{
     private boolean isExecuting = false;
     private String executorID;
     private Goal[] goals;
-    private boolean archieved = false;
+    private boolean fulfilled = false;
 
     Task(String name, boolean state, String executorID, Goal[] goals){
         this.name = name;
@@ -36,7 +37,18 @@ public class Task implements Serializable{
         return goals;
     }
 
-    public void setDone(){
-        archieved = true;
+    public boolean isFulfilled(){
+        boolean isFul = true;
+        for(Goal g : goals)
+            isFul = g.getState();
+        return isFul;
+    }
+
+    public Date getTaskBegin() {
+        return goals[0].getBeginDate();
+    }
+
+    public Date getTaskEnd() {
+        return goals[goals.length - 1].getEndDate();
     }
 }
