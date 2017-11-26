@@ -83,6 +83,8 @@ public class ChartActivity extends AppCompatActivity {
         chart.setData(lineData);
         chart.invalidate();
 
+        chart.setDrawBorders(true);
+
         // work with axises
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
