@@ -87,6 +87,7 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
         if(position == 0)
             firstGoalView = holder;
 
+        ((CheckBox)holder.layout.findViewById(R.id.checkBox)).setEnabled(true);
         if(!currentGoalFound && !mDataset[position].getState() && ((MyApp)context.getApplicationContext()).getCurrentTask() != null){
             currentGoalFound = true;
         }else{
@@ -106,8 +107,16 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
                         public void onClick(DialogInterface dialog, int whichButton) {
                             view.setEnabled(false);
                             mDataset[position].setState(true);
-                            if(position + 1 < mDataset.length)
+                            if(position + 1 < mDataset.length) {
                                 holder.group.getChildAt(position + 1).findViewById(R.id.checkBox).setEnabled(true);
+                                if(mDataset[position+1].getPhotoRequired())
+                                    holder.group.getChildAt(position + 1).findViewById(R.id.additional_task).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            ((GoalsListActivity)context).takePhoto(position + 1);
+                                        }
+                                    });
+                            }
                         }
                     });
                     builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
@@ -135,13 +144,9 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
         if(mDataset[position].getPhotoRequired()){
             additionalTaskButton.setVisibility(View.VISIBLE);
             additionalTaskButton.setBackgroundColor(Color.parseColor("#43ff98"));
-            additionalTaskButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((GoalsListActivity)context).takePhoto(position);
-                }
-            });
         }
+        if(position == mDataset.length - 1)
+            currentGoalFound = false;
     }
 
     // Return the size of your dataset (invoked by the layout manager)

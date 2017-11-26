@@ -6,35 +6,48 @@
     android:layout_height="match_parent"
     tools:context="ua.com.lhjlbjyjd.sibur.GoalDetailsActivity">
 
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/goal_image"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/goal_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/goal_image"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:text="Название"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/goal_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/goal_name"
-        android:layout_alignStart="@+id/goal_name"
-        android:layout_below="@+id/goal_name"
-        android:layout_marginTop="8dp"
-        android:text="1/01/1987 - 1/1/2018"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/goal_image"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/goal_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/goal_image"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:text="Название"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <TextView
+                android:id="@+id/goal_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/goal_name"
+                android:layout_alignStart="@+id/goal_name"
+                android:layout_below="@+id/goal_name"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:text="1/01/1987 - 1/1/2018"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

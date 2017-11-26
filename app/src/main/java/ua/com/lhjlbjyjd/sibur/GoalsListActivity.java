@@ -16,6 +16,7 @@ public class GoalsListActivity extends AppCompatActivity {
 
     private Goal[] goals;
     int lastPhotoIndex = -1;
+    GoalListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,9 @@ public class GoalsListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example
-        final GoalListAdapter mAdapter = new GoalListAdapter(goals, getIntent().getIntExtra("Task", 0),this);
+        mAdapter = new GoalListAdapter(goals, getIntent().getIntExtra("Task", 0),this);
 
-
+        final GoalListAdapter proxyAdapter = mAdapter;
         final Task proxyTask = task;
 
         if(((MyApp) getApplicationContext()).getCurrentTask() != null){
@@ -54,7 +55,7 @@ public class GoalsListActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     ((MyApp) getApplicationContext()).setCurrentTask(proxyTask);
                     view.setVisibility(View.GONE);
-                    mAdapter.startFulfillingTask();
+                    proxyAdapter.startFulfillingTask();
                 }
             });
         }
@@ -78,7 +79,7 @@ public class GoalsListActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             goals[lastPhotoIndex].setImage(imageBitmap);
             goals[lastPhotoIndex].setPhotoRequired(false);
-            Log.d("Index", String.valueOf(lastPhotoIndex));
+            mAdapter.notifyDataSetChanged();
             lastPhotoIndex = -1;
         }
     }

@@ -2,6 +2,7 @@ package ua.com.lhjlbjyjd.sibur;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +21,10 @@ public class GoalDetailsActivity extends AppCompatActivity {
         Goal currentGoal = ((MyApp)getApplicationContext()).getGoalFromTask(((MyApp)getApplicationContext()).getTask(getIntent().getIntExtra("taskId", 0)),
                 getIntent().getIntExtra("goalId",  0));
 
-        ((ImageView)findViewById(R.id.goal_image)).setImageBitmap(currentGoal.getImage());
+        if(currentGoal.getImage() != null)
+            ((ImageView)findViewById(R.id.goal_image)).setImageBitmap(currentGoal.getImage());
+        else
+            findViewById(R.id.goal_image).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.goal_name)).setText(currentGoal.getDescription());
         setTitle(currentGoal.getDescription());
         DateFormat df = new SimpleDateFormat(pattern);
