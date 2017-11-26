@@ -53,8 +53,7 @@ public class ChartActivity extends AppCompatActivity {
         taskTitle = "Выполненные задания за период";
         List <Task> fulTasks = new ArrayList<Task>();
 
-        List<Entry> entriesBegin = new ArrayList<Entry>();
-        List<Entry> entriesEnd = new ArrayList<Entry>();
+        List<Entry> entries = new ArrayList<Entry>();
         int count = 0;
 
         for(Task t : tasks) {
@@ -67,28 +66,24 @@ public class ChartActivity extends AppCompatActivity {
 
         LineChart chart = (LineChart) findViewById(R.id.chart);
         minValue = fulTasks.get(0).getTaskBegin().getTime();
+        int[] colors = new int[count * 2];
         for(int i = 0; i < count; i++) {
             Task t = fulTasks.get(i);
-            entriesBegin.add(new Entry(convertTimeToFloat(t.getTaskBegin()), convertGoalToPer(i + 1)));
-            entriesEnd.add(new Entry(convertTimeToFloat(t.getTaskEnd()), convertGoalToPer(i + 1)));
+            entries.add(new Entry(convertTimeToFloat(t.getTaskBegin()), convertGoalToPer(i + 1)));
+            colors[2 * i] = Color.BLUE;
+            entries.add(new Entry(convertTimeToFloat(t.getTaskEnd()), convertGoalToPer(i + 1)));
+            colors[2 * i + 1] = Color.GREEN;
         }
 
-        LineDataSet dataSetBegin = new LineDataSet(entriesBegin, taskTitle);
-        LineDataSet dataSetEnd = new LineDataSet(entriesEnd, taskTitle);
+        LineDataSet dataSetBegin = new LineDataSet(entries, taskTitle);
         // lol kek some color set
-        dataSetBegin.setColor(Color.parseColor("#FF0000"));
         dataSetBegin.setValueTextColor(Color.parseColor("#000000"));
         dataSetBegin.setCircleRadius(6f);
         dataSetBegin.setCircleColor(Color.BLUE);
         dataSetBegin.setLineWidth(5f);
 
-        dataSetEnd.setColor(Color.parseColor("#FF0000"));
-        dataSetEnd.setValueTextColor(Color.parseColor("#000000"));
-        dataSetEnd.setCircleRadius(6f);
-        dataSetEnd.setCircleColor(Color.GREEN);
-        dataSetEnd.setLineWidth(5f);
-
-        LineData lineData = new LineData(dataSetBegin, dataSetEnd);
+        dataSetBegin.setColors(colors);
+        LineData lineData = new LineData(dataSetBegin);
         chart.setData(lineData);
         chart.invalidate();
 
@@ -109,7 +104,6 @@ public class ChartActivity extends AppCompatActivity {
         leftAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
 
         dataSetBegin.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        dataSetEnd.setAxisDependency(YAxis.AxisDependency.RIGHT);
 
         leftAxis.setDrawLabels(false);
         leftAxis.setDrawZeroLine(true);
@@ -123,6 +117,11 @@ public class ChartActivity extends AppCompatActivity {
     void graphGoal() {
         taskTitle = currentTask.getName();
         goals = currentTask.getGoals();
+        int[] colors = new int[goals.length];
+
+        for(int i = 0; i < colors.length; i++)
+            colors[i] = Color.RED;
+
 
         Date[] timesOfGoalBegin = new Date[goals.length], timesOfGoalEnd = new Date[goals.length];
         for(int i = 0; i < goals.length; i++){
@@ -144,21 +143,24 @@ public class ChartActivity extends AppCompatActivity {
         }
 
         Date lastDate = new Date();
-        if(goalsFinished) lastDate = timesOfGoalEnd[count - 1];
+        if(goalsFinished) {
+            colors[goals.length - 1] = Color.GREEN;
+            lastDate = timesOfGoalEnd[count - 1];
+        }
 
-        for(int i = 0; i < count; i++)
-            entries.add(new Entry(convertTimeToFloat(timesOfGoalBegin[i]),convertGoalToPer(i)));
-
+        for(int i = 0; i < count; i++) {
+            colors[i] = Color.GREEN;
+            entries.add(new Entry(convertTimeToFloat(timesOfGoalBegin[i]), convertGoalToPer(i)));
+        }
         entries.add(new Entry(convertTimeToFloat(lastDate),convertGoalToPer(count)));
 
         LineDataSet dataSet = new LineDataSet(entries, taskTitle);
         // lol kek some color set
-        dataSet.setColor(Color.parseColor("#FF0000"));
+        dataSet.setColors(colors);
         dataSet.setValueTextColor(Color.parseColor("#000000"));
         dataSet.setCircleRadius(6f);
-        dataSet.setCircleColor(Color.BLUE);
+        dataSet.setCircleColor(Color.GREEN);
         dataSet.setLineWidth(5f);
-
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
         chart.invalidate();
