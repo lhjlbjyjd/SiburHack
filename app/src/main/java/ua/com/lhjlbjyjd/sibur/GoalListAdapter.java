@@ -31,6 +31,7 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     private Goal[] mDataset;
     private Context context;
     private ViewHolder firstGoalView;
+    private int taskId;
 
     private boolean currentGoalFound = false;
 
@@ -49,9 +50,10 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public GoalListAdapter(Goal[] myDataset, Context context) {
+    public GoalListAdapter(Goal[] myDataset, int taskId, Context context) {
         mDataset = myDataset;
         this.context = context;
+        this.taskId = taskId;
     }
 
     // Create new views (invoked by the layout manager)
@@ -71,6 +73,16 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, GoalDetailsActivity.class);
+                intent.putExtra("taskId", taskId);
+                intent.putExtra("goalId", position);
+                context.startActivity(intent);
+            }
+        });
 
         if(position == 0)
             firstGoalView = holder;

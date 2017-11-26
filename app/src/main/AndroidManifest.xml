@@ -35,7 +35,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ua.com.lhjlbjyjd.sibur.MainActivity" />
         </activity>
-        <activity android:name=".GoalDetailsActivity"></activity>
+        <activity
+            android:name=".GoalDetailsActivity"
+            android:parentActivityName=".GoalsListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ua.com.lhjlbjyjd.sibur.GoalsListActivity" />
+        </activity>
     </application>
 
 </manifest>

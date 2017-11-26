@@ -34,7 +34,7 @@ public class GoalsListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example
-        final GoalListAdapter mAdapter = new GoalListAdapter(goals, this);
+        final GoalListAdapter mAdapter = new GoalListAdapter(goals, getIntent().getIntExtra("Task", 0),this);
 
 
         final Task proxyTask = task;
