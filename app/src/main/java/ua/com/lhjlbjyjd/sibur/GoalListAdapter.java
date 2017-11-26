@@ -32,6 +32,7 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     private Context context;
     private ViewHolder firstGoalView;
     private int taskId;
+    private Task parentTask;
 
     private boolean currentGoalFound = false;
 
@@ -50,10 +51,11 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public GoalListAdapter(Goal[] myDataset, int taskId, Context context) {
+    public GoalListAdapter(Goal[] myDataset, int taskId, Task task, Context context) {
         mDataset = myDataset;
         this.context = context;
         this.taskId = taskId;
+        parentTask = task;
     }
 
     // Create new views (invoked by the layout manager)
@@ -118,6 +120,9 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
                                             ((GoalsListActivity)context).takePhoto(position + 1);
                                         }
                                     });
+                            }else{
+                                parentTask.setFulfilled();
+                                ((MyApp)context.getApplicationContext()).currentTask = null;
                             }
                         }
                     });

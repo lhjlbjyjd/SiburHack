@@ -56,6 +56,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ((TextView)holder.layout.findViewById(R.id.task_name_text)).setText(mDataset[position].getName());
+        ((TextView)holder.layout.findViewById(R.id.task_status)).setText(mDataset[position].isFulfilled() ? "Выполнено" : "Доступно");
         if(hasTask) {
             holder.layout.setBackgroundColor(Color.parseColor("#e6e6e6"));
             ((TextView)holder.layout.findViewById(R.id.task_status)).setText("Недоступно");

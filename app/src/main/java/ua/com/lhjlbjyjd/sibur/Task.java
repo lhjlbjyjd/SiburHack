@@ -41,7 +41,7 @@ public class Task implements Serializable{
         boolean isFul = true;
         for(Goal g : goals)
             isFul = g.getState();
-        return isFul;
+        return isFul || fulfilled;
     }
 
     public Date getTaskBegin() {
@@ -50,5 +50,9 @@ public class Task implements Serializable{
 
     public Date getTaskEnd() {
         return goals[goals.length - 1].getEndDate();
+    }
+
+    public void setFulfilled() {
+        this.fulfilled = true;
     }
 }

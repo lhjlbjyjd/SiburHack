@@ -17,12 +17,13 @@ public class GoalsListActivity extends AppCompatActivity {
     private Goal[] goals;
     int lastPhotoIndex = -1;
     GoalListAdapter mAdapter;
+    Task task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goals_list);
-        Task task;
+
         if(!getIntent().getBooleanExtra("isCurrentTask", false)) {
             task = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
         }else{
@@ -42,7 +43,7 @@ public class GoalsListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example
-        mAdapter = new GoalListAdapter(goals, getIntent().getIntExtra("Task", 0),this);
+        mAdapter = new GoalListAdapter(goals, getIntent().getIntExtra("Task", 0), task, this);
 
         final GoalListAdapter proxyAdapter = mAdapter;
         final Task proxyTask = task;
