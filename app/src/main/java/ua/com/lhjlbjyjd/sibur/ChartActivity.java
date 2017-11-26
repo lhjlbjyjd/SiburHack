@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -92,9 +94,10 @@ public class ChartActivity extends AppCompatActivity {
         chart.setContentDescription("LOL KEK");
         xAxis.setAxisMaximum(convertTimeToFloat(lastDate));
 
+        xAxis.setValueFormatter(new XAxisValueFormatter());
+
         YAxis leftAxis = chart.getAxisLeft();
         YAxis rightAxis = chart.getAxisRight();
-
         leftAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
         dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
 
@@ -103,7 +106,6 @@ public class ChartActivity extends AppCompatActivity {
         leftAxis.setDrawAxisLine(false);
         leftAxis.setDrawGridLines(false);
         chart.getAxisRight().setEnabled(false);
-
     }
 
     float convertTimeToFloat(Date newDate)
@@ -113,9 +115,22 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     // размер одной сотой графика
-    private int sizeForOne = 10;
+    private int sizeForOne = 1;
     float convertGoalToPer(int i, int numberOfGoals) {
         return (i * 100.0f / numberOfGoals * sizeForOne);
+    }
+
+    public class XAxisValueFormatter implements IAxisValueFormatter {
+
+        String newPattern = "HH:mm";
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+          String time;
+          Date newDate = new Date((long) value);
+          DateFormat df = new SimpleDateFormat(newPattern);
+          time = df.format(newDate);
+          return time;
+        }
     }
 
 }
