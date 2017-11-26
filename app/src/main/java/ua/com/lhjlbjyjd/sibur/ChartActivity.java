@@ -32,7 +32,7 @@ public class ChartActivity extends AppCompatActivity {
     private Goal[] goals;
     private String pattern = "HH:mm:ss dd-MM-yyyy";
     private String taskTitle;
-
+    private long minValue;
     private Task[] tasks;
     Date periodBegin, periodEnd;
     @Override
@@ -64,7 +64,7 @@ public class ChartActivity extends AppCompatActivity {
         }
 
         LineChart chart = (LineChart) findViewById(R.id.chart);
-
+        minValue = fulTasks.get(0).getTaskBegin().getTime();
         for(int i = 0; i < count; i++) {
             Task t = fulTasks.get(i);
             entriesBegin.add(new Entry(convertTimeToFloat(t.getTaskBegin()), convertGoalToPer(i + 1, count)));
@@ -123,7 +123,7 @@ public class ChartActivity extends AppCompatActivity {
         goals = currentTask.getGoals();
 
         Date[] timesOfGoalBegin = new Date[goals.length], timesOfGoalEnd = new Date[goals.length];
-
+        minValue = timesOfGoalBegin[0].getTime();
         for(int i = 0; i < goals.length; i++){
             timesOfGoalBegin[i] = goals[i].getBeginDate();
             timesOfGoalEnd[i] = goals[i].getEndDate();
@@ -194,7 +194,7 @@ public class ChartActivity extends AppCompatActivity {
 
     float convertTimeToFloat(Date newDate)
     {
-        long mili = newDate.getTime() / 60000;
+        long mili = newDate.getTime() - minValue;
         return mili;
     }
 
@@ -206,11 +206,11 @@ public class ChartActivity extends AppCompatActivity {
 
     public class XAxisValueFormatter implements IAxisValueFormatter {
 
-        String newPattern = "HH:mm";
+        String newPattern = "HH:mm:ss";
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
           String time;
-          Date newDate = new Date(((long) value) * 60000);
+          Date newDate = new Date(((long) value) + minValue);
           DateFormat df = new SimpleDateFormat(newPattern);
           time = df.format(newDate);
           return time;
