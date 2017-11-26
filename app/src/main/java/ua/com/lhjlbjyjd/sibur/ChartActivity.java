@@ -134,11 +134,11 @@ public class ChartActivity extends AppCompatActivity {
         List<Entry> entries = new ArrayList<Entry>();
         int count = 0;
         for(Goal gol : goals) {
+            count++;
             if(gol.getState() == false) {
                 goalsFinished = false;
                 break;
             }
-            count++;
         }
 
         int counts = count;

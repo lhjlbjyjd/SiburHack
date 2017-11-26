@@ -13,8 +13,10 @@ public class Task implements Serializable{
     private String executorID;
     private Goal[] goals;
     private boolean fulfilled = false;
+    private int id;
 
-    Task(String name, boolean state, String executorID, Goal[] goals){
+    Task(int id, String name, boolean state, String executorID, Goal[] goals){
+        this.id = id;
         this.name = name;
         this.isExecuting = state;
         this.executorID = executorID;

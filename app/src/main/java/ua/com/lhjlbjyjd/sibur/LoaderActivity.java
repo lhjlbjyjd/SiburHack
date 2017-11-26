@@ -65,6 +65,7 @@ public class LoaderActivity extends AppCompatActivity {
                 JSONArray array = new JSONArray(resultJson);
                 for(int i = 0; i < array.length(); i++){
                     JSONObject object = array.getJSONObject(i);
+                    int id = object.getInt("id");
                     String name = object.getString("Name");
                     boolean state = !object.getString("StartDate").equals("0");
                     String executorId = object.getString("workerId");
@@ -79,9 +80,9 @@ public class LoaderActivity extends AppCompatActivity {
                         boolean photoRequired = goalObject.getBoolean("photoRequired");
                         boolean emailRequired = goalObject.getBoolean("emailRequired");
                         String photoUrl = goalObject.getString("photo");
-                        goals.add(new Goal(description,!endDate.equals("0"), photoRequired, emailRequired, LoaderActivity.this));
+                        goals.add(new Goal(description,!endDate.equals("0"), photoRequired, emailRequired, photoUrl, LoaderActivity.this));
                     }
-                    tasks.add(new Task(name, state, executorId, goals.toArray(new Goal[goals.size()])));
+                    tasks.add(new Task(id, name, state, executorId, goals.toArray(new Goal[goals.size()])));
                 }
                 app.setTasks(tasks.toArray(new Task[tasks.size()]));
                 Log.d("ListSize", String.valueOf(tasks.size()));

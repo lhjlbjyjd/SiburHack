@@ -48,7 +48,7 @@ public class GoalsListActivity extends AppCompatActivity {
         final GoalListAdapter proxyAdapter = mAdapter;
         final Task proxyTask = task;
 
-        if(((MyApp) getApplicationContext()).getCurrentTask() != null){
+        if(((MyApp) getApplicationContext()).getCurrentTask() != null || task.isFulfilled()){
             findViewById(R.id.fulfillTask).setVisibility(View.GONE);
         }else{
             findViewById(R.id.fulfillTask).setOnClickListener(new View.OnClickListener() {

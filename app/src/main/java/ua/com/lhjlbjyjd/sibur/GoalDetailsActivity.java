@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -23,6 +25,8 @@ public class GoalDetailsActivity extends AppCompatActivity {
 
         if(currentGoal.getImage() != null)
             ((ImageView)findViewById(R.id.goal_image)).setImageBitmap(currentGoal.getImage());
+        else if(!currentGoal.getBitmapUrl().equals("null"))
+            Picasso.with(this).load(currentGoal.getBitmapUrl()).into((ImageView)findViewById(R.id.goal_image));
         else
             findViewById(R.id.goal_image).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.goal_name)).setText(currentGoal.getDescription());

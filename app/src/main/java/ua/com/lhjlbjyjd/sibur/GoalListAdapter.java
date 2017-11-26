@@ -122,7 +122,9 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
                                     });
                             }else{
                                 parentTask.setFulfilled();
+                                ((MyApp)context.getApplicationContext()).addTask(parentTask);
                                 ((MyApp)context.getApplicationContext()).currentTask = null;
+                                ((GoalsListActivity)context).finish();
                             }
                         }
                     });
@@ -175,6 +177,7 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
                     public void onClick(DialogInterface dialog, int whichButton) {
                         view.setEnabled(false);
                         mDataset[0].setState(true);
+                        mDataset[1].setBeginDate(System.currentTimeMillis());
                         if(1 < mDataset.length)
                             firstGoalView.group.getChildAt(1).findViewById(R.id.checkBox).setEnabled(true);
                     }

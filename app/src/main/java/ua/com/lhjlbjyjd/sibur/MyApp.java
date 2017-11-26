@@ -3,6 +3,11 @@ package ua.com.lhjlbjyjd.sibur;
 import android.app.Application;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by lhjlbjyjd on 26.11.2017.
  */
@@ -35,7 +40,9 @@ public class MyApp extends Application {
     }
 
     public Task getTask(int i){
-        return tasks[i];
+        if(tasks.length > 0)
+            return tasks[i];
+        else return currentTask;
     }
 
     public Goal getGoalFromTask(Task task, int i){
@@ -48,9 +55,23 @@ public class MyApp extends Application {
 
     public void setCurrentTask(Task task) {
         currentTask = task;
+        List<Task> tmp = new LinkedList<>(Arrays.asList(tasks));
+        tmp.remove(currentTask);
+        tasks = tmp.toArray(new Task[tmp.size()]);
+
+
     }
 
     public void setTasks(Task [] tasks){
         this.tasks = tasks;
+    }
+
+    public void addTask(Task task){
+        Task[] tmp = new Task[tasks.length+1];
+        for(int i = 0; i < tasks.length; i++){
+            tmp[i] = tasks[i];
+        }
+        tmp[tasks.length] = task;
+        tasks = tmp;
     }
 }

@@ -16,14 +16,20 @@ public class Goal implements Serializable{
     private String description;
     private Bitmap image;
     private Date endDate = new Date(0), beginDate = new Date(0);
+    private String bitmapUrl;
 
 
-    Goal(String description, boolean state, boolean photoRequired, boolean emailRequired, Context context) {
+    Goal(String description, boolean state, boolean photoRequired, boolean emailRequired, String bitmapUrl, Context context) {
         this.description = description;
         this.state = state;
         this.photoRequired = photoRequired;
         this.emailRequired = emailRequired;
+        this.bitmapUrl = bitmapUrl;
         //image = BitmapFactory.decodeResource(context.getResources(), R.drawable.test_image);
+    }
+
+    public String getBitmapUrl() {
+        return bitmapUrl;
     }
 
     String getDescription() {
