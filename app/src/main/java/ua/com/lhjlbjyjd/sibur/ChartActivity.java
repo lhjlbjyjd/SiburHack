@@ -157,9 +157,8 @@ public class ChartActivity extends AppCompatActivity {
         dataSet.setColors(colors);
         dataSet.setValueTextColor(Color.parseColor("#000000"));
         dataSet.setCircleRadius(6f);
-        dataSet.setCircleColor(Color.BLUE);
+        dataSet.setCircleColor(Color.GREEN);
         dataSet.setLineWidth(5f);
-
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
         chart.invalidate();
