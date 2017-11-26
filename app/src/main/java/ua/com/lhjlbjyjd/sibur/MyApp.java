@@ -1,6 +1,7 @@
 package ua.com.lhjlbjyjd.sibur;
 
 import android.app.Application;
+import android.provider.Settings;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -58,12 +59,16 @@ public class MyApp extends Application {
         List<Task> tmp = new LinkedList<>(Arrays.asList(tasks));
         tmp.remove(currentTask);
         tasks = tmp.toArray(new Task[tmp.size()]);
-
-
     }
 
     public void setTasks(Task [] tasks){
         this.tasks = tasks;
+        for(int i = 0; i < this.tasks.length; i++)
+            if(this.tasks[i].getExecutorID().equals(Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID))) {
+                this.tasks[i] = currentTask;
+                break;
+            }
     }
 
     public void addTask(Task task){

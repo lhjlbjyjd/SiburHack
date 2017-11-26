@@ -1,5 +1,8 @@
 package ua.com.lhjlbjyjd.sibur;
 
+import android.content.Context;
+import android.provider.Settings;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,6 +24,10 @@ public class Task implements Serializable{
         this.isExecuting = state;
         this.executorID = executorID;
         this.goals = goals;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getExecutorID() {
