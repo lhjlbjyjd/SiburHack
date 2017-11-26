@@ -8,13 +8,13 @@ import android.util.Log;
  */
 
 public class MyApp extends Application {
-    Task[] tasks = new Task[10];
+    Task[] tasks;
     Task currentTask = null;
 
     @Override
     public void onCreate(){
         super.onCreate();
-        for(int i = 0; i < 10; i++) {
+        /*for(int i = 0; i < 10; i++) {
             Goal[] goalsData = new Goal[6];
             for(int j = 0; j < 6; j++) {
                 goalsData[j] = new Goal("Goal " + j, false, j == 5, j == 5*2, this);
@@ -23,11 +23,11 @@ public class MyApp extends Application {
                     goalsData[j].setEndDate(System.currentTimeMillis() + (j+1) * 600000);
                 } else if(j == 5){
                     goalsData[j].setBeginDate(System.currentTimeMillis() + j * 600000);
-                }*/
+                }
             }
             tasks[i] = new Task("Задание " + i, false, "0", goalsData);
         }
-        //currentTask = tasks[3];
+        //currentTask = tasks[3];*/
     }
 
     public Task[] getTasks(){
