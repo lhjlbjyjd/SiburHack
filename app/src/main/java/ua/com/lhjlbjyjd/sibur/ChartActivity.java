@@ -123,12 +123,11 @@ public class ChartActivity extends AppCompatActivity {
         goals = currentTask.getGoals();
 
         Date[] timesOfGoalBegin = new Date[goals.length], timesOfGoalEnd = new Date[goals.length];
-        minValue = timesOfGoalBegin[0].getTime();
         for(int i = 0; i < goals.length; i++){
             timesOfGoalBegin[i] = goals[i].getBeginDate();
             timesOfGoalEnd[i] = goals[i].getEndDate();
         }
-
+        minValue = timesOfGoalBegin[0].getTime();
         LineChart chart = (LineChart) findViewById(R.id.chart);
 
         boolean goalsFinished = true;
