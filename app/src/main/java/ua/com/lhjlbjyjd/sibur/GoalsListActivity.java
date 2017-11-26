@@ -1,13 +1,10 @@
 package ua.com.lhjlbjyjd.sibur;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import static ua.com.lhjlbjyjd.sibur.GoalListAdapter.REQUEST_IMAGE_CAPTURE;
+import android.view.View;
 
 public class GoalsListActivity extends AppCompatActivity {
 
@@ -17,7 +14,12 @@ public class GoalsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goals_list);
-        Task task = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
+        Task task;
+        if(!getIntent().getBooleanExtra("isCurrentTask", false)) {
+            task = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
+        }else{
+            task = ((MyApp) getApplicationContext()).getCurrentTask();
+        }
         setTitle(task.getName());
         goals = task.getGoals();
 
@@ -32,7 +34,25 @@ public class GoalsListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example
-        GoalListAdapter mAdapter = new GoalListAdapter(goals, this);
+        final GoalListAdapter mAdapter = new GoalListAdapter(goals, this);
+
+
+        final Task proxyTask = task;
+
+        if(((MyApp) getApplicationContext()).getCurrentTask() != null){
+            findViewById(R.id.fulfillTask).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.fulfillTask).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((MyApp) getApplicationContext()).setCurrentTask(proxyTask);
+                    view.setVisibility(View.GONE);
+                    mAdapter.startFulfillingTask();
+                }
+            });
+        }
+
+
         mRecyclerView.setAdapter(mAdapter);
     }
 }

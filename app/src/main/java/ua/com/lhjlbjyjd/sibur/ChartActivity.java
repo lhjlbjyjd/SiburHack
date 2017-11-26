@@ -110,7 +110,7 @@ public class ChartActivity extends AppCompatActivity {
 
     float convertTimeToFloat(Date newDate)
     {
-        long mili = newDate.getTime();
+        long mili = newDate.getTime() / 60000;
         return mili;
     }
 
@@ -126,7 +126,7 @@ public class ChartActivity extends AppCompatActivity {
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
           String time;
-          Date newDate = new Date((long) value);
+          Date newDate = new Date((long) value * 60000);
           DateFormat df = new SimpleDateFormat(newPattern);
           time = df.format(newDate);
           return time;

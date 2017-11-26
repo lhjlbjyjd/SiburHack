@@ -1,6 +1,8 @@
 package ua.com.lhjlbjyjd.sibur;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,11 +18,12 @@ public class Goal implements Serializable{
     private Date endDate = new Date(0), beginDate = new Date(0);
 
 
-    Goal(String description, boolean state, boolean photoRequired, boolean emailRequired) {
+    Goal(String description, boolean state, boolean photoRequired, boolean emailRequired, Context context) {
         this.description = description;
         this.state = state;
         this.photoRequired = photoRequired;
         this.emailRequired = emailRequired;
+        image = BitmapFactory.decodeResource(context.getResources(), R.drawable.test_image);
     }
 
     String getDescription() {
