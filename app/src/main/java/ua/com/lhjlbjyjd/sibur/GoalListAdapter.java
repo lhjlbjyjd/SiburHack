@@ -24,7 +24,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by lhjlbjyjd on 25.11.2017.
  */
 
-public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHolder> {
+public class  GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHolder> {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
