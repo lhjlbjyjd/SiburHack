@@ -30,6 +30,9 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
 
     private Goal[] mDataset;
     private Context context;
+    private ViewHolder firstGoalView;
+
+    private boolean currentGoalFound = false;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -37,9 +40,11 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         RelativeLayout layout;
-        public ViewHolder(RelativeLayout v) {
+        ViewGroup group;
+        public ViewHolder(RelativeLayout v, ViewGroup vg) {
             super(v);
             layout = v;
+            group = vg;
         }
     }
 
@@ -57,15 +62,25 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
         RelativeLayout v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.goal_item, parent, false).findViewById(R.id.goal_layout);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolder vh = new ViewHolder(v, parent);
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
+        if(position == 0)
+            firstGoalView = holder;
+
+        if(!currentGoalFound && !mDataset[position].getState() && ((MyApp)context.getApplicationContext()).getCurrentTask() != null){
+            currentGoalFound = true;
+        }else{
+            ((CheckBox)holder.layout.findViewById(R.id.checkBox)).setChecked(mDataset[position].getState());
+            holder.layout.findViewById(R.id.checkBox).setEnabled(false);
+        }
         ((TextView)holder.layout.findViewById(R.id.goal_description_text)).setText(mDataset[position].getDescription());
         if(!mDataset[position].getState()) {
             holder.layout.findViewById(R.id.checkBox).setOnClickListener(new View.OnClickListener() {
@@ -79,6 +94,8 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
                         public void onClick(DialogInterface dialog, int whichButton) {
                             view.setEnabled(false);
                             mDataset[position].setState(true);
+                            if(position + 1 < mDataset.length)
+                                holder.group.getChildAt(position + 1).findViewById(R.id.checkBox).setEnabled(true);
                         }
                     });
                     builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
@@ -122,6 +139,34 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
     @Override
     public int getItemCount() {
         return mDataset.length;
+    }
+
+    public void startFulfillingTask(){
+        firstGoalView.layout.findViewById(R.id.checkBox).setEnabled(true);
+        firstGoalView.layout.findViewById(R.id.checkBox).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
+                builder.setTitle("Подтверждение");
+                builder.setMessage("Вы подтверждаете выполнение задачи?");
+                builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        view.setEnabled(false);
+                        mDataset[0].setState(true);
+                        if(1 < mDataset.length)
+                            firstGoalView.group.getChildAt(1).findViewById(R.id.checkBox).setEnabled(true);
+                    }
+                });
+                builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ((CheckBox) view).setChecked(false);
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
 }
