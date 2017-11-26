@@ -51,7 +51,8 @@ public class ChartActivity extends AppCompatActivity {
         taskTitle = "Выполненные задания за период";
         List <Task> fulTasks = new ArrayList<Task>();
 
-        List<Entry> entries = new ArrayList<Entry>();
+        List<Entry> entriesBegin = new ArrayList<Entry>();
+        List<Entry> entriesEnd = new ArrayList<Entry>();
         int count = 0;
 
         for(Task t : tasks) {
@@ -66,19 +67,26 @@ public class ChartActivity extends AppCompatActivity {
 
         for(int i = 0; i < count; i++) {
             Task t = fulTasks.get(i);
-            entries.add(new Entry(convertTimeToFloat(t.getTaskBegin()), convertGoalToPer(i + 1, count)));
-            entries.add(new Entry(convertTimeToFloat(t.getTaskEnd()), convertGoalToPer(i + 1, count)));
+            entriesBegin.add(new Entry(convertTimeToFloat(t.getTaskBegin()), convertGoalToPer(i + 1, count)));
+            entriesEnd.add(new Entry(convertTimeToFloat(t.getTaskEnd()), convertGoalToPer(i + 1, count)));
         }
 
-        LineDataSet dataSet = new LineDataSet(entries, taskTitle);
+        LineDataSet dataSetBegin = new LineDataSet(entriesBegin, taskTitle);
+        LineDataSet dataSetEnd = new LineDataSet(entriesEnd, taskTitle);
         // lol kek some color set
-        dataSet.setColor(Color.parseColor("#FF0000"));
-        dataSet.setValueTextColor(Color.parseColor("#000000"));
-        dataSet.setCircleRadius(6f);
-        dataSet.setCircleColor(Color.GREEN);
-        dataSet.setLineWidth(5f);
+        dataSetBegin.setColor(Color.parseColor("#FF0000"));
+        dataSetBegin.setValueTextColor(Color.parseColor("#000000"));
+        dataSetBegin.setCircleRadius(6f);
+        dataSetBegin.setCircleColor(Color.BLUE);
+        dataSetBegin.setLineWidth(5f);
 
-        LineData lineData = new LineData(dataSet);
+        dataSetEnd.setColor(Color.parseColor("#FF0000"));
+        dataSetEnd.setValueTextColor(Color.parseColor("#000000"));
+        dataSetEnd.setCircleRadius(6f);
+        dataSetEnd.setCircleColor(Color.GREEN);
+        dataSetEnd.setLineWidth(5f);
+
+        LineData lineData = new LineData(dataSetBegin, dataSetEnd);
         chart.setData(lineData);
         chart.invalidate();
 
@@ -97,13 +105,17 @@ public class ChartActivity extends AppCompatActivity {
         YAxis leftAxis = chart.getAxisLeft();
         YAxis rightAxis = chart.getAxisRight();
         leftAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
-        dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+
+        dataSetBegin.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        dataSetEnd.setAxisDependency(YAxis.AxisDependency.RIGHT);
 
         leftAxis.setDrawLabels(false);
         leftAxis.setDrawZeroLine(true);
         leftAxis.setDrawAxisLine(false);
         leftAxis.setDrawGridLines(false);
         chart.getAxisRight().setEnabled(false);
+
+        chart.invalidate();
     }
 
     void graphGoal() {
@@ -176,6 +188,8 @@ public class ChartActivity extends AppCompatActivity {
         leftAxis.setDrawAxisLine(false);
         leftAxis.setDrawGridLines(false);
         chart.getAxisRight().setEnabled(false);
+
+        chart.invalidate();
     }
 
     float convertTimeToFloat(Date newDate)
