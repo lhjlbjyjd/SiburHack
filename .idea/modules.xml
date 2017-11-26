@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://D:\Git\SiburHack\SiburHack\Sibur.iml" filepath="D:\Git\SiburHack\SiburHack\Sibur.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SiburHack.iml" filepath="$PROJECT_DIR$/SiburHack.iml" />
-      <module fileurl="file://C:\Users\lhjlbjyjd\AndroidStudioProjects\Sibur\SiburHack.iml" filepath="C:\Users\lhjlbjyjd\AndroidStudioProjects\Sibur\SiburHack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Sibur.iml" filepath="$PROJECT_DIR$/Sibur.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -138,10 +138,7 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
             additionalTaskButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
-                        ((GoalsListActivity)context).startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                    }
+                    ((GoalsListActivity)context).takePhoto(position);
                 }
             });
         }

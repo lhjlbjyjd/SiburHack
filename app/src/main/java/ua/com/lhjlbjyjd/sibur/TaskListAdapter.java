@@ -58,6 +58,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         ((TextView)holder.layout.findViewById(R.id.task_name_text)).setText(mDataset[position].getName());
         if(hasTask) {
             holder.layout.setBackgroundColor(Color.parseColor("#e6e6e6"));
+            ((TextView)holder.layout.findViewById(R.id.task_status)).setText("Недоступно");
+            ((TextView)holder.layout.findViewById(R.id.task_status)).setTextColor(Color.parseColor("#FF0000"));
         }else {
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override

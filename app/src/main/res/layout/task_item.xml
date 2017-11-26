@@ -18,4 +18,17 @@
         android:text="Название"
         android:id="@+id/task_name_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/task_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="27dp"
+        android:layout_marginRight="27dp"
+        android:text=""
+        android:textColor="#00FF00"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 </RelativeLayout>

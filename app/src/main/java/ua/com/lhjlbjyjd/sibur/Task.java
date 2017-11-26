@@ -11,6 +11,7 @@ public class Task implements Serializable{
     private boolean isExecuting = false;
     private String executorID;
     private Goal[] goals;
+    private boolean archieved = false;
 
     Task(String name, boolean state, String executorID, Goal[] goals){
         this.name = name;
@@ -33,5 +34,9 @@ public class Task implements Serializable{
 
     public Goal[] getGoals() {
         return goals;
+    }
+
+    public void setDone(){
+        archieved = true;
     }
 }

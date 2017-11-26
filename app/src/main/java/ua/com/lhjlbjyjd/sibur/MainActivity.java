@@ -1,6 +1,7 @@
 package ua.com.lhjlbjyjd.sibur;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ChartActivity.class);
-                intent.putExtra("Task", app.getTask(0));
+                intent.putExtra("Task", 0);
                 startActivity(intent);
             }
         });
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Log.d("CurrentTask", app.getCurrentTask().getName());
             ((TextView)currentTask.findViewById(R.id.task_name_text)).setText(app.getCurrentTask().getName());
+            ((TextView)currentTask.findViewById(R.id.task_status)).setText("Выполняется");
+            ((TextView)currentTask.findViewById(R.id.task_status)).setTextColor(Color.parseColor("#0000FF"));
             currentTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

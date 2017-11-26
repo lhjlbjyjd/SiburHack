@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.nfc.FormatException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -37,7 +38,7 @@ public class ChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
-        Task currentTask = (Task)getIntent().getSerializableExtra("Task");
+        Task currentTask = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
         taskTitle = currentTask.getName();
         goals = currentTask.getGoals();
 
@@ -77,16 +78,14 @@ public class ChartActivity extends AppCompatActivity {
         LineDataSet dataSet = new LineDataSet(entries, taskTitle);
         // lol kek some color set
         dataSet.setColor(Color.parseColor("#FF0000"));
-        dataSet.setValueTextColor(7);
-        dataSet.setCircleRadius(10f);
+        dataSet.setValueTextColor(Color.parseColor("#000000"));
+        dataSet.setCircleRadius(6f);
         dataSet.setCircleColor(Color.BLUE);
         dataSet.setLineWidth(5f);
 
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
         chart.invalidate();
-
-        chart.setDrawBorders(true);
 
         // work with axises
         XAxis xAxis = chart.getXAxis();
@@ -96,7 +95,6 @@ public class ChartActivity extends AppCompatActivity {
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
         xAxis.setAxisMinimum(convertTimeToFloat(timesOfGoalBegin[0]));
-        chart.setContentDescription("LOL KEK");
         xAxis.setAxisMaximum(convertTimeToFloat(lastDate));
 
         xAxis.setValueFormatter(new XAxisValueFormatter());

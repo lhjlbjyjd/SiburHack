@@ -23,7 +23,7 @@ public class Goal implements Serializable{
         this.state = state;
         this.photoRequired = photoRequired;
         this.emailRequired = emailRequired;
-        image = BitmapFactory.decodeResource(context.getResources(), R.drawable.test_image);
+        //image = BitmapFactory.decodeResource(context.getResources(), R.drawable.test_image);
     }
 
     String getDescription() {
@@ -68,5 +68,9 @@ public class Goal implements Serializable{
 
     public void setEndDate(long i){
         endDate = new Date(i);
+    }
+
+    public void setPhotoRequired(boolean photoRequired) {
+        this.photoRequired = photoRequired;
     }
 }
