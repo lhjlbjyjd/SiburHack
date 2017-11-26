@@ -67,8 +67,8 @@ public class ChartActivity extends AppCompatActivity {
         minValue = fulTasks.get(0).getTaskBegin().getTime();
         for(int i = 0; i < count; i++) {
             Task t = fulTasks.get(i);
-            entriesBegin.add(new Entry(convertTimeToFloat(t.getTaskBegin()), convertGoalToPer(i + 1, count)));
-            entriesEnd.add(new Entry(convertTimeToFloat(t.getTaskEnd()), convertGoalToPer(i + 1, count)));
+            entriesBegin.add(new Entry(convertTimeToFloat(t.getTaskBegin()), convertGoalToPer(i + 1)));
+            entriesEnd.add(new Entry(convertTimeToFloat(t.getTaskEnd()), convertGoalToPer(i + 1)));
         }
 
         LineDataSet dataSetBegin = new LineDataSet(entriesBegin, taskTitle);
@@ -141,14 +141,13 @@ public class ChartActivity extends AppCompatActivity {
             }
         }
 
-        int counts = count;
         Date lastDate = new Date();
         if(goalsFinished) lastDate = timesOfGoalEnd[count - 1];
 
         for(int i = 0; i < count; i++)
-            entries.add(new Entry(convertTimeToFloat(timesOfGoalBegin[i]),convertGoalToPer(i, counts)));
+            entries.add(new Entry(convertTimeToFloat(timesOfGoalBegin[i]),convertGoalToPer(i)));
 
-        entries.add(new Entry(convertTimeToFloat(lastDate),convertGoalToPer(count, count)));
+        entries.add(new Entry(convertTimeToFloat(lastDate),convertGoalToPer(count)));
 
         LineDataSet dataSet = new LineDataSet(entries, taskTitle);
         // lol kek some color set
@@ -179,11 +178,14 @@ public class ChartActivity extends AppCompatActivity {
         leftAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
         dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
 
+
+        leftAxis.setAxisMaximum(goals.length);
         leftAxis.setDrawLabels(false);
         leftAxis.setDrawZeroLine(true);
         leftAxis.setDrawAxisLine(false);
         leftAxis.setDrawGridLines(false);
         chart.getAxisRight().setEnabled(false);
+        leftAxis.setValueFormatter(new YAxisValueFormatter());
 
         chart.invalidate();
     }
@@ -196,8 +198,8 @@ public class ChartActivity extends AppCompatActivity {
 
     // размер одной сотой графика
     private int sizeForOne = 1;
-    float convertGoalToPer(int i, int numberOfGoals) {
-        return (i * 100.0f / numberOfGoals * sizeForOne);
+    float convertGoalToPer(int i) {
+        return i;
     }
 
     public class XAxisValueFormatter implements IAxisValueFormatter {
@@ -210,6 +212,15 @@ public class ChartActivity extends AppCompatActivity {
           DateFormat df = new SimpleDateFormat(newPattern);
           time = df.format(newDate);
           return time;
+        }
+    }
+
+    public class YAxisValueFormatter implements IAxisValueFormatter {
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            int i = (int) value;
+            String title = goals[i].getDescription();
+            return title;
         }
     }
 
