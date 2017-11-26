@@ -3,6 +3,7 @@ package ua.com.lhjlbjyjd.sibur;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Toreno on 25.11.2017.
@@ -12,6 +13,7 @@ public class Goal implements Serializable{
     private boolean state = false, photoRequired = false, emailRequired = false;
     private String description;
     private Bitmap image;
+    private Date endDate = new Date(0), beginDate = new Date(0);
 
 
     Goal(String description, boolean state, boolean photoRequired, boolean emailRequired) {
@@ -20,7 +22,7 @@ public class Goal implements Serializable{
         this.photoRequired = photoRequired;
         this.emailRequired = emailRequired;
     }
- ///
+
     String getDescription() {
         return  description;
     }
@@ -47,5 +49,21 @@ public class Goal implements Serializable{
 
     public Bitmap getImage() {
         return image;
+    }
+
+    public Date getBeginDate() {
+        return beginDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setBeginDate(long i){
+        beginDate = new Date(i);
+    }
+
+    public void setEndDate(long i){
+        endDate = new Date(i);
     }
 }

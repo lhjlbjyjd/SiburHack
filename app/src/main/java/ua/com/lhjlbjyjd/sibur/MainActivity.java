@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ChartActivity.class);
-                //intent.putExtra("Dates", dates);
+                intent.putExtra("Task", ((MyApp) getApplicationContext()).getTask(0));
                 startActivity(intent);
             }
         });

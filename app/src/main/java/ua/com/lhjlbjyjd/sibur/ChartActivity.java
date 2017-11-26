@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ChartActivity extends AppCompatActivity {
-    private Date[] timesOfGoalBegin, timesOfGoalEnd;
+    Task currentTask;
     private Goal[] goals;
     private String pattern = "HH:mm:ss dd-MM-yyyy";
     private String taskTitle;
@@ -34,6 +34,17 @@ public class ChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
+
+        Task currentTask = (Task)getIntent().getSerializableExtra("Task");
+        taskTitle = currentTask.getName();
+        goals = currentTask.getGoals();
+
+        Date[] timesOfGoalBegin = new Date[goals.length], timesOfGoalEnd = new Date[goals.length];
+
+        for(int i = 0; i < goals.length; i++){
+            timesOfGoalBegin[i] = goals[i].getBeginDate();
+            timesOfGoalEnd[i] = goals[i].getEndDate();
+        }
 
         LineChart chart = (LineChart) findViewById(R.id.chart);
 
@@ -63,7 +74,7 @@ public class ChartActivity extends AppCompatActivity {
 
         LineDataSet dataSet = new LineDataSet(entries, taskTitle);
         // lol kek some color set
-        dataSet.setColor(5);
+        dataSet.setColor(Color.parseColor("#FF0000"));
         dataSet.setValueTextColor(7);
 
         LineData lineData = new LineData(dataSet);
@@ -78,7 +89,7 @@ public class ChartActivity extends AppCompatActivity {
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
         xAxis.setAxisMinimum(convertTimeToFloat(timesOfGoalBegin[0]));
-
+        chart.setContentDescription("LOL KEK");
         xAxis.setAxisMaximum(convertTimeToFloat(lastDate));
 
         YAxis leftAxis = chart.getAxisLeft();
