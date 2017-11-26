@@ -143,7 +143,6 @@ public class ChartActivity extends AppCompatActivity {
 
         int counts = count;
         Date lastDate = new Date();
-
         if(goalsFinished) lastDate = timesOfGoalEnd[count - 1];
 
         for(int i = 0; i < count; i++)
