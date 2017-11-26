@@ -107,7 +107,9 @@ public class GoalListAdapter extends RecyclerView.Adapter<GoalListAdapter.ViewHo
                         public void onClick(DialogInterface dialog, int whichButton) {
                             view.setEnabled(false);
                             mDataset[position].setState(true);
+                            mDataset[position].setEndDate(System.currentTimeMillis());
                             if(position + 1 < mDataset.length) {
+                                mDataset[position + 1].setBeginDate(System.currentTimeMillis());
                                 holder.group.getChildAt(position + 1).findViewById(R.id.checkBox).setEnabled(true);
                                 if(mDataset[position+1].getPhotoRequired())
                                     holder.group.getChildAt(position + 1).findViewById(R.id.additional_task).setOnClickListener(new View.OnClickListener() {

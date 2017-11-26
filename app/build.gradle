@@ -29,5 +29,5 @@ dependencies {
     // K add this to use graphs
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     implementation 'com.android.support:design:26.1.0'
-
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }

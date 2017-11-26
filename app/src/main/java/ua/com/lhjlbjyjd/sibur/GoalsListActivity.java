@@ -56,6 +56,7 @@ public class GoalsListActivity extends AppCompatActivity {
                     ((MyApp) getApplicationContext()).setCurrentTask(proxyTask);
                     view.setVisibility(View.GONE);
                     proxyAdapter.startFulfillingTask();
+                    goals[0].setBeginDate(System.currentTimeMillis());
                 }
             });
         }
