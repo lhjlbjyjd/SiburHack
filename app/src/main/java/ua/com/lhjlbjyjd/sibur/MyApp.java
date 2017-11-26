@@ -49,4 +49,8 @@ public class MyApp extends Application {
     public void setCurrentTask(Task task) {
         currentTask = task;
     }
+
+    public void setTasks(Task [] tasks){
+        this.tasks = tasks;
+    }
 }
