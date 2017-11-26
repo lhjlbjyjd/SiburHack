@@ -78,10 +78,15 @@ public class ChartActivity extends AppCompatActivity {
         // lol kek some color set
         dataSet.setColor(Color.parseColor("#FF0000"));
         dataSet.setValueTextColor(7);
+        dataSet.setCircleRadius(10f);
+        dataSet.setCircleColor(Color.BLUE);
+        dataSet.setLineWidth(5f);
 
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
         chart.invalidate();
+
+        chart.setDrawBorders(true);
 
         // work with axises
         XAxis xAxis = chart.getXAxis();
@@ -126,7 +131,7 @@ public class ChartActivity extends AppCompatActivity {
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
           String time;
-          Date newDate = new Date((long) value * 60000);
+          Date newDate = new Date(((long) value) * 60000);
           DateFormat df = new SimpleDateFormat(newPattern);
           time = df.format(newDate);
           return time;
