@@ -10,16 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <include layout="@layout/goal_item"
-        android:id="@+id/current_goal" />
+    <include layout="@layout/task_item"
+        android:id="@+id/current_task" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/tasks_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="494dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/current_goal"
+            android:layout_below="@+id/current_task"
             android:scrollbars="vertical"
             tools:layout_editor_absoluteY="108dp" />
 
