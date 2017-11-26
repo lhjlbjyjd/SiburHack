@@ -134,17 +134,17 @@ public class ChartActivity extends AppCompatActivity {
         List<Entry> entries = new ArrayList<Entry>();
         int count = 0;
         for(Goal gol : goals) {
-            count++;
             if(gol.getState() == false) {
                 goalsFinished = false;
                 break;
             }
+            count++;
         }
 
         int counts = count;
-        Date lastDate;
+        Date lastDate = new Date();
 
-        lastDate = timesOfGoalEnd[count - 1];
+        if(goalsFinished) lastDate = timesOfGoalEnd[count - 1];
 
         for(int i = 0; i < count; i++)
             entries.add(new Entry(convertTimeToFloat(timesOfGoalBegin[i]),convertGoalToPer(i, counts)));
