@@ -33,12 +33,80 @@ public class ChartActivity extends AppCompatActivity {
     private String pattern = "HH:mm:ss dd-MM-yyyy";
     private String taskTitle;
 
+    private Task[] tasks;
+    Date periodBegin, periodEnd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
-        Task currentTask = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
+        // случай 1: получено задание, по целям которого нужно построить график
+        currentTask = ((MyApp) getApplicationContext()).getTask(getIntent().getIntExtra("Task", 0));
+        graphGoal();
+        // случай 2: получен массив заданий и границы периода
+
+    }
+
+    void graphTask() {
+        taskTitle = "Выполненные задания за период";
+        List <Task> fulTasks = new ArrayList<Task>();
+
+        List<Entry> entries = new ArrayList<Entry>();
+        int count = 0;
+
+        for(Task t : tasks) {
+            if(t.isFulfilled() && (t.getTaskBegin().getTime() >= periodBegin.getTime())
+                    && (t.getTaskEnd().getTime() <= periodEnd.getTime())) {
+                fulTasks.add(t);
+                count++;
+            }
+        }
+
+        LineChart chart = (LineChart) findViewById(R.id.chart);
+
+        for(int i = 0; i < count; i++) {
+            Task t = fulTasks.get(i);
+            entries.add(new Entry(convertTimeToFloat(t.getTaskBegin()), convertGoalToPer(i + 1, count)));
+            entries.add(new Entry(convertTimeToFloat(t.getTaskEnd()), convertGoalToPer(i + 1, count)));
+        }
+
+        LineDataSet dataSet = new LineDataSet(entries, taskTitle);
+        // lol kek some color set
+        dataSet.setColor(Color.parseColor("#FF0000"));
+        dataSet.setValueTextColor(Color.parseColor("#000000"));
+        dataSet.setCircleRadius(6f);
+        dataSet.setCircleColor(Color.GREEN);
+        dataSet.setLineWidth(5f);
+
+        LineData lineData = new LineData(dataSet);
+        chart.setData(lineData);
+        chart.invalidate();
+
+        // work with axises
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(10f);
+        xAxis.setTextColor(Color.RED);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setAxisMinimum(convertTimeToFloat(periodBegin));
+        xAxis.setAxisMaximum(convertTimeToFloat(periodEnd));
+
+        xAxis.setValueFormatter(new XAxisValueFormatter());
+
+        YAxis leftAxis = chart.getAxisLeft();
+        YAxis rightAxis = chart.getAxisRight();
+        leftAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
+        dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+
+        leftAxis.setDrawLabels(false);
+        leftAxis.setDrawZeroLine(true);
+        leftAxis.setDrawAxisLine(false);
+        leftAxis.setDrawGridLines(false);
+        chart.getAxisRight().setEnabled(false);
+    }
+
+    void graphGoal() {
         taskTitle = currentTask.getName();
         goals = currentTask.getGoals();
 
@@ -64,7 +132,6 @@ public class ChartActivity extends AppCompatActivity {
 
         int counts = count;
         Date lastDate;
-
         if(goalsFinished)
             lastDate = timesOfGoalEnd[count - 1];
         else
@@ -73,7 +140,7 @@ public class ChartActivity extends AppCompatActivity {
         for(int i = 0; i < count; i++)
             entries.add(new Entry(convertTimeToFloat(timesOfGoalBegin[i]),convertGoalToPer(i, counts)));
 
-            entries.add(new Entry(convertTimeToFloat(lastDate),convertGoalToPer(count, count)));
+        entries.add(new Entry(convertTimeToFloat(lastDate),convertGoalToPer(count, count)));
 
         LineDataSet dataSet = new LineDataSet(entries, taskTitle);
         // lol kek some color set
